@@ -109,7 +109,7 @@ export default [
   },
   {
     id: 150,
-    name: 'pikachu',
+    name: 'Pikachu',
     type: 'electric',
     image: 'https://pokeres.bastionbot.org/images/pokemon/25.png'
   },
