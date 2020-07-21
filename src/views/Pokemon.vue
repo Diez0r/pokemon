@@ -1,35 +1,21 @@
 <template>
-  <div class="home">
-<!--    <AppHeader />-->
+  <div class="pokemon">
     <h1 class="home__title">
-      PokeDex
+      Pokemon  {{ $route.params.id }}
+
     </h1>
-    <div class="home__container">
-      <PokemonCard
-        v-for="pokemon of pokemons"
-        :key="pokemon.id"
-        :pokemon="pokemon"
-      />
-    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import constants from "../constants/pages.js";
-import PokemonCard from '@/components/PokemonCard.vue';
 import pokemons from "../pokemons";
 
 export default {
-  name: 'Home',
-
-  components: {
-    PokemonCard,
-  },
+  name: 'Pokemon',
 
   data() {
     return {
-      pokemon: constants.pokemon,
       pokemons,
     }
   },

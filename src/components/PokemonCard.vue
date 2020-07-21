@@ -1,39 +1,48 @@
 <template>
-  <div 
-    class="pokemon-card"
-    :style="{backgroundColor: getBackgroundColor(pokemon.type)}"
-    @click="getPokemonInfo(pokemon)"
+  <router-link
+    :to="`/pokemon/${pokemon.id}`"
   >
-    <div class="pokemon-card__img-container">
-      <img 
-        :src="pokemon.image"
-        width="120"
-        height="120"
-        class="pokemon-card__img"
-      >
+    <div
+      class="pokemon-card"
+      :style="{backgroundColor: getBackgroundColor(pokemon.type)}"
+      @click="getPokemonInfo(pokemon)"
+    >
+      <div class="pokemon-card__img-container">
+        <img
+          :src="pokemon.image"
+          width="120"
+          height="120"
+          class="pokemon-card__img"
+        >
+      </div>
+      <div class="pokemon-card__info">
+        <span class="pokemon-card__number">
+          {{ pokemonNumber }}
+        </span>
+        <h3 class="pokemon-card__name">
+          {{ changeLettersCase }}
+        </h3>
+        <p class="pokemon-card__type">
+          Type: {{ pokemon.type }}
+        </p>
+      </div>
     </div>
-    <div class="pokemon-card__info">
-      <span class="pokemon-card__number">
-        {{ pokemonNumber }}
-      </span>
-      <h3 class="pokemon-card__name">
-        {{ changeLettersCase }}
-      </h3>
-      <p class="pokemon-card__type">
-        Type: {{ pokemon.type }}
-      </p>
-    </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
 export default {
   name: 'PokemonCard',
-  
+
   props: {
     pokemon: {
     type: Object,
     default: null,
+    },
+
+    link: {
+      type: String,
+      default: '',
     },
   },
 
