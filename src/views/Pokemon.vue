@@ -1,26 +1,31 @@
 <template>
   <div class="pokemon">
-    <h1 class="pokemon__title">
-      Pokemon  {{ getPokemonById.name }}
-    </h1>
-    <div class="pokemon__img-container">
-      <img
-        :src="getPokemonById.image"
-        width="120"
-        height="120"
-        class="pokemon__img"
-      >
-    </div>
-    <div class="pokemon__info">
-        <span class="pokemon__number">
-          {{ getPokemonById.id }}
-        </span>
-      <h3 class="pokemon__name">
-        {{ getPokemonById.name }}
-      </h3>
-      <p class="pokemon__type">
-        Type: {{ getPokemonById.type }}
-      </p>
+    <div
+      :style="{backgroundColor: getBackgroundColor(getPokemonById.type)}"
+      class="pokemon__container"
+    >
+      <h1 class="pokemon__title">
+        Pokemon  {{ getPokemonById.name }}
+      </h1>
+      <div class="pokemon__img-container">
+        <img
+          :src="getPokemonById.image"
+          width="120"
+          height="120"
+          class="pokemon__img"
+        >
+      </div>
+      <div class="pokemon__info">
+          <span class="pokemon__number">
+            {{ getPokemonById.id }}
+          </span>
+        <h3 class="pokemon__name">
+          {{ getPokemonById.name }}
+        </h3>
+        <p class="pokemon__type">
+          Type: {{ getPokemonById.type }}
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -60,12 +65,16 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400&display=swap');
 
 .pokemon
-  border-radius 20px
-  box-shadow 0 3px 15px rgba(100, 100, 100, 0.5)
-  margin 10px
-  padding 20px
-  text-align center
-  background-color #eee
+  &__container
+    display flex
+    flex-direction column
+    justify-content center
+    align-items center
+    border-radius 20px
+    box-shadow 0 3px 15px rgba(100, 100, 100, 0.5)
+    margin 10px
+    padding 20px
+    text-align center
 
   &__img-container
     background-color rgba(255, 255, 255, 0.6)
