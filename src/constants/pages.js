@@ -1,5 +1,5 @@
 export default {
   main: '/',
-  pokemon: '/pokemon/:id',
+  pokemon: '/',
   search: '/search',
 };

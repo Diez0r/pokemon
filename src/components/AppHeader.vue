@@ -66,7 +66,8 @@
 </template>
 
 <script>
-  import constants from "../constants/pages.js";
+import constants from "@/constants/pages";
+
 
   export default {
     name: 'AppHeader',
@@ -95,7 +96,7 @@
   box-sizing border-box
   width 100%
   padding 50px
-  background-color red
+  background linear-gradient(to bottom, white, 5%, red)
   font-family 'Lato'
 
   &__container
@@ -217,7 +218,7 @@
       flex-direction column
       justify-content center
       align-items center
-      background-color red
+      background linear-gradient(to bottom, white, 1%, red)
 
     &__mob-container
       display flex
