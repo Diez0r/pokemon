@@ -7,7 +7,7 @@
       :style="{backgroundColor: getBackgroundColor(getPokemonById.type)}"
       class="pokemon__container">
       <h1 class="pokemon__title">
-        Pokemon  {{ getPokemonById.name }}
+        Pokemon  {{ changeNamesLetterCase }}
       </h1>
       <div class="pokemon__img-container">
         <img
@@ -19,10 +19,10 @@
       </div>
       <div class="pokemon__info">
           <span class="pokemon__number">
-            {{ getPokemonById.id }}
+            {{ pokemonNumber }}
           </span>
         <h3 class="pokemon__name">
-          {{ getPokemonById.name }}
+          {{ changeNamesLetterCase }}
         </h3>
         <p class="pokemon__type">
           Type: {{ getPokemonById.type }}
@@ -63,23 +63,39 @@ export default {
 
   mixins: [pokemonMixin],
 
-  computed: {
-    getPokemonById() {
-      for (let pokemon of this.pokemonCard) {
-        if (pokemon.id.toString() === this.pokemonId) {
-          console.log(pokemon);
-          return pokemon;
-        }
-      }
-    },
-  },
-
   data() {
     return {
       pages: constants,
       pokemonId: this.$route.params.id,
-      pokemonCard: pokemons,
+      pokemons,
     }
+  },
+
+  computed: {
+    getPokemonById() {
+      const pokemon = this.pokemons.find(({ id }) => this.pokemonId === String(id));
+
+      return pokemon ? pokemon : null;
+    },
+
+    pokemonNumber() {
+      const idLenght = String(this.getPokemonById.id).length;
+      if (idLenght === 1) {
+        return `#00${this.getPokemonById.id}`
+      } else if (idLenght === 2) {
+        return `#0${this.getPokemonById.id}`
+      } else if (idLenght >= 3) {
+        return `#${this.getPokemonById.id}`
+      }
+    },
+    changeNamesLetterCase() {
+      if (this.getPokemonById.name.toLowerCase() === 'pikachu') {
+        return this.getPokemonById.name.toUpperCase()
+      } else {
+        let toUpperLetter = `${(this.getPokemonById.name[0]).toUpperCase()}${this.getPokemonById.name.slice(1)}`
+        return toUpperLetter
+      }
+    },
   },
 };
 </script>
@@ -89,19 +105,26 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400&display=swap');
 
 .pokemon
+  display flex
+  justify-content center
   font-family 'Lato'
 
   &__container
     display flex
     flex-direction column
-    justify-content spa
+    justify-content center
     align-items center
+    width 30%
     border-radius 20px
     box-shadow 0 3px 15px rgba(100, 100, 100, 0.5)
     margin 10px
     padding 20px
     text-align center
     background-color #eee
+
+  @media screen and (max-width 1023px)
+    &__container
+      width 75%
 
   &__img-container
     background-color rgba(255, 255, 255, 0.6)
