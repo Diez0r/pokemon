@@ -10,18 +10,19 @@
       class="search__input"
       id="search_id"
       v-model="searchInput"
+      @input="checkForPokemons"
     >
-    <button
-    type="button"
-    class="search__button"
-    @click="searchPokemon"
-    >
-      Search
-    </button>
-    <PokemonCard
-      v-if="searchedPokemon"
-      :pokemon="searchedPokemon"
-    />
+    <ul
+      v-if="newPokArr && newPokArr.length"
+      class="search__results">
+      <li
+        v-for="(item, i) of newPokArr"
+        class="search__item">
+          <PokemonCard
+            :pokemon="item"
+          />
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -42,20 +43,24 @@ export default {
     return {
     searchInput: '',
     pokemons,
-    searchedPokemon: '',
+    newPokArr: [],
     }
   },
 
   methods: {
-    searchPokemon() {
+    checkForPokemons() {
       for (let pokemon of this.pokemons) {
-        if (this.searchInput.toLowerCase() === pokemon.name.toLowerCase()) {
-          this.searchedPokemon = pokemon;
-        }
+        let inputField = this.searchInput.toLowerCase();
+        let search = '';
+
+          if (inputField === pokemon.name.toLowerCase().substr(0, 4)) {
+            search += inputField;
+            console.log(search);
+            this.newPokArr.push(pokemon);
+            console.log(this.newPokArr);
+          }
       }
-      console.log(this.searchedPokemon.name);
-      return this.searchedPokemon;
-    }
+    },
   },
 };
 </script>
@@ -81,5 +86,9 @@ export default {
     padding 20px
     text-align center
     background-color #eee
+
+  &__results
+    list-style none
+    display flex
 
 </style>
