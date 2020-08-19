@@ -9,14 +9,14 @@
       type="text"
       class="search__input"
       id="search_id"
-      v-model="searchInput"
-      @input="checkForPokemons"
+      v-model="searchValue"
+      @input="searchPokemons"
     >
     <ul
-      v-if="newPokArr && newPokArr.length"
+      v-if="searchResult && searchResult.length"
       class="search__results">
       <li
-        v-for="(item, i) of newPokArr"
+        v-for="(item, i) of searchResult"
         class="search__item">
           <PokemonCard
             :pokemon="item"
@@ -41,25 +41,28 @@ export default {
 
   data() {
     return {
-    searchInput: '',
-    pokemons,
-    newPokArr: [],
+      searchValue: '',
+      pokemons,
+      searchResult: [],
+      error: false,
     }
   },
+  // TODO реализовать
+  // Ошибку если введено <= 3 символа при этом поиск не запускать
+  // Ошибку если ничего не найдено
+  // Кнопку сброса поиска
+  // Дебаунс
 
   methods: {
-    checkForPokemons() {
-      for (let pokemon of this.pokemons) {
-        let inputField = this.searchInput.toLowerCase();
-        let search = '';
-
-          if (inputField === pokemon.name.toLowerCase().substr(0, 4)) {
-            search += inputField;
-            console.log(search);
-            this.newPokArr.push(pokemon);
-            console.log(this.newPokArr);
-          }
+    searchPokemons() {
+      if (!this.searchValue.length) {
+        this.searchResult = [];
+        return;
       }
+
+      const loverCaseSearchInput = this.searchValue.toLowerCase();
+
+      this.searchResult = this.pokemons.filter(({ name }) => name.includes(loverCaseSearchInput));
     },
   },
 };
