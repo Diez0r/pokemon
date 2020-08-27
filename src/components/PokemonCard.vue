@@ -26,12 +26,26 @@
           Type: {{ pokemon.type }}
         </p>
       </div>
-    </div>
+      <div
+        ref="pokemonSlider"
+        class="swiper-container"
+      >
+        <div class="swiper-wrapper">
+          <img
+            :src="pokemon.image"
+            width="120"
+            height="120"
+            class="swiper-slide pokemon-card__img"
+          >
+        </div>
+      </div>
+      </div>
   </router-link>
 </template>
 
 <script>
 import pokemonMixin from "../views/mixin.ts";
+import Swiper from "swiper"
 
 export default {
   name: 'PokemonCard',
@@ -48,6 +62,12 @@ export default {
       type: String,
       default: '',
     },
+  },
+
+  data() {
+    return {
+      pokemonSlider: null,
+    }
   },
 
   computed: {
@@ -71,7 +91,22 @@ export default {
     },
   },
 
+  mounted() {
+    this.$nextTick(() => {
+      this.initPokemonSlider();
+    });
+  },
+
   methods: {
+    initPokemonSlider() {
+      const options = {
+          slidesPerView: 'auto',
+          spaceBetween: 5,
+      };
+
+      this.pokemonSlider = new Swiper('.swiper-container', options);
+    },
+
     getPokemonInfo(pokemon) {
       if (pokemon.name.toLowerCase() === 'pikachu') {
         alert('Pika - Pika')
