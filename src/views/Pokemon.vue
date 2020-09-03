@@ -28,6 +28,7 @@
           Type: {{ getPokemonById.type }}
         </p>
       </div>
+
     </div>
     <div
       v-else
@@ -79,12 +80,12 @@ export default {
     },
 
     pokemonNumber() {
-      const idLenght = String(this.getPokemonById.id).length;
-      if (idLenght === 1) {
+      const idLength = String(this.getPokemonById.id).length;
+      if (idLength === 1) {
         return `#00${this.getPokemonById.id}`
-      } else if (idLenght === 2) {
+      } else if (idLength === 2) {
         return `#0${this.getPokemonById.id}`
-      } else if (idLenght >= 3) {
+      } else if (idLength >= 3) {
         return `#${this.getPokemonById.id}`
       }
     },
@@ -92,8 +93,7 @@ export default {
       if (this.getPokemonById.name.toLowerCase() === 'pikachu') {
         return this.getPokemonById.name.toUpperCase()
       } else {
-        let toUpperLetter = `${(this.getPokemonById.name[0]).toUpperCase()}${this.getPokemonById.name.slice(1)}`
-        return toUpperLetter
+        return `${(this.getPokemonById.name[0]).toUpperCase()}${this.getPokemonById.name.slice(1)}`
       }
     },
   },

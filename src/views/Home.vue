@@ -4,9 +4,28 @@
     <h1 class="home__title">
       PokeDex
     </h1>
+    {{ checked }}
+    <div class="home__filters-block">
+      <div
+        v-for="pokemon of getPokemonTypes"
+        :key="pokemon.id"
+        class="home__checkbox"
+      >
+        <input
+          type="checkbox"
+          id="checkbox"
+          :value="pokemon"
+          :checked="shouldBeChecked"
+          @change="updateVals"
+        >
+        <label for="checkbox">
+          {{ pokemon }}
+        </label>
+      </div>
+    </div>
     <div class="home__container">
       <PokemonCard
-        v-for="pokemon of pokemons"
+        v-for="pokemon of sortedPokemons"
         :key="pokemon.id"
         :pokemon="pokemon"
       />
@@ -27,12 +46,57 @@ export default {
     PokemonCard,
   },
 
+  computed: {
+    getPokemonTypes() {
+      const typesArray = []
+      for (let pokemon of pokemons) {
+        typesArray.push(pokemon.type)
+      }
+
+      return typesArray.filter((item, index) => typesArray.indexOf(item) === index);
+    },
+
+    shouldBeChecked(val) {
+      if (this.checked instanceof Array) {
+        return this.checked.includes(this.value)
+      }
+      return this.checked.includes(val)
+    },
+  },
+
   data() {
     return {
       pokemon: constants.pokemon,
       pokemons,
+      checked: [],
+      sortedPokemons: [],
     }
   },
+
+  methods: {
+    sortPokemonsByType() {
+      for (let i = 0; i <= pokemons.length; i++) {
+        for (let j = 0; j <= this.checked.length; j++) {
+          if (pokemons[i].type === this.checked[j]) {
+            this.sortedPokemons.push(pokemons[i])
+          }
+        }
+      }
+    },
+
+    updateVals(e) {
+      let isChecked = e.target.checked
+      let val = e.target.value
+
+      if (isChecked) {
+        this.checked.push(val)
+        console.log(val);
+      } else {
+        this.checked.splice(this.checked.indexOf(val), 1)
+      }
+    }
+  },
+
 };
 </script>
 

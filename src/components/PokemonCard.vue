@@ -26,19 +26,6 @@
           Type: {{ pokemon.type }}
         </p>
       </div>
-      <div
-        ref="pokemonSlider"
-        class="swiper-container"
-      >
-        <div class="swiper-wrapper">
-          <img
-            :src="pokemon.image"
-            width="120"
-            height="120"
-            class="swiper-slide pokemon-card__img"
-          >
-        </div>
-      </div>
       </div>
   </router-link>
 </template>
@@ -64,20 +51,14 @@ export default {
     },
   },
 
-  data() {
-    return {
-      pokemonSlider: null,
-    }
-  },
-
   computed: {
     pokemonNumber() {
-      const idLenght = String(this.pokemon.id).length;
-      if (idLenght === 1) {
+      const idLength = String(this.pokemon.id).length;
+      if (idLength === 1) {
         return `#00${this.pokemon.id}`
-      } else if (idLenght === 2) {
+      } else if (idLength === 2) {
         return `#0${this.pokemon.id}`
-      } else if (idLenght >= 3) {
+      } else if (idLength >= 3) {
         return `#${this.pokemon.id}`
       }
     },
@@ -91,22 +72,7 @@ export default {
     },
   },
 
-  mounted() {
-    this.$nextTick(() => {
-      this.initPokemonSlider();
-    });
-  },
-
   methods: {
-    initPokemonSlider() {
-      const options = {
-          slidesPerView: 'auto',
-          spaceBetween: 5,
-      };
-
-      this.pokemonSlider = new Swiper('.swiper-container', options);
-    },
-
     getPokemonInfo(pokemon) {
       if (pokemon.name.toLowerCase() === 'pikachu') {
         alert('Pika - Pika')
