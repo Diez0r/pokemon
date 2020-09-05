@@ -75,10 +75,19 @@ export default {
 
   methods: {
     sortPokemonsByType() {
-      for (let i = 0; i <= pokemons.length; i++) {
-        for (let j = 0; j <= this.checked.length; j++) {
-          if (pokemons[i].type === this.checked[j]) {
-            this.sortedPokemons.push(pokemons[i])
+      // for (let i = 0; i <= pokemons.length; i++) {
+      //   for (let j = 0; j <= this.checked.length; j++) {
+      //     if (pokemons[i].type === this.checked[j]) {
+      //       this.sortedPokemons.push(pokemons[i])
+      //     }
+      //   }
+      // }
+
+      for (let i = 0; i <= this.checked.length; i++) {
+        for (let j = 0; j < this.pokemons.length; j++) {
+          if (pokemons[j].type === this.checked[i]) {
+            this.sortedPokemons.push(pokemons[j])
+            console.log(pokemons[j]);
           }
         }
       }
@@ -90,8 +99,9 @@ export default {
 
       if (isChecked) {
         this.checked.push(val)
-        console.log(val);
+        this.sortPokemonsByType();
       } else {
+        this.checked.pop()
         this.checked.splice(this.checked.indexOf(val), 1)
       }
     }
