@@ -16,7 +16,8 @@
           id="checkbox"
           :value="pokemon"
           :checked="shouldBeChecked"
-          @change="updateVals"
+          v-model="checked"
+          @change="sortPokemonsByType"
         >
         <label for="checkbox">
           {{ pokemon }}
@@ -69,42 +70,37 @@ export default {
       pokemon: constants.pokemon,
       pokemons,
       checked: [],
-      sortedPokemons: [],
+      sortedPokemons: pokemons,
     }
   },
 
-  methods: {
-    sortPokemonsByType() {
-      // for (let i = 0; i <= pokemons.length; i++) {
-      //   for (let j = 0; j <= this.checked.length; j++) {
-      //     if (pokemons[i].type === this.checked[j]) {
-      //       this.sortedPokemons.push(pokemons[i])
-      //     }
-      //   }
-      // }
+  watch: {
+    '$route.query': function () {
+      this.fillChosenFilters();
+    },
+  },
 
-      for (let i = 0; i <= this.checked.length; i++) {
-        for (let j = 0; j < this.pokemons.length; j++) {
-          if (pokemons[j].type === this.checked[i]) {
-            this.sortedPokemons.push(pokemons[j])
-            console.log(pokemons[j]);
-          }
-        }
-      }
+  mounted() {
+    this.fillChosenFilters();
+  },
+
+  methods: {
+    fillChosenFilters() {
+      // if (this.$route.query && this.$route.query.length) {
+        //this.checked = this.$route.query;
+        //console.log(this.$route.query);
+      console.log(111);
+      // }
     },
 
-    updateVals(e) {
-      let isChecked = e.target.checked
-      let val = e.target.value
+    sortPokemonsByType() {
+      if (this.checked.length > 0) {
+        this.sortedPokemons = this.pokemons.filter(pokemon => this.checked.find(item => pokemon.type === item))
+      } else this.sortedPokemons = this.pokemons
 
-      if (isChecked) {
-        this.checked.push(val)
-        this.sortPokemonsByType();
-      } else {
-        this.checked.pop()
-        this.checked.splice(this.checked.indexOf(val), 1)
-      }
-    }
+
+      this.$router.push({ query: this.checked })
+    },
   },
 
 };

@@ -82,7 +82,6 @@ export default {
   created() {
     this.debounceForSearchInput = debounce(() => {
       this.searchPokemons();
-      console.log(111);
     }, 500);
   },
   // TODO реализовать
