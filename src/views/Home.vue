@@ -15,7 +15,6 @@
           type="checkbox"
           id="checkbox"
           :value="pokemon"
-          :checked="shouldBeChecked"
           v-model="checked"
           @change="sortPokemonsByType"
         >
@@ -77,27 +76,27 @@ export default {
   watch: {
     '$route.query': function () {
       this.fillChosenFilters();
+      this.sortPokemonsByType();
     },
   },
 
   mounted() {
     this.fillChosenFilters();
+    this.sortPokemonsByType();
   },
 
   methods: {
     fillChosenFilters() {
-      // if (this.$route.query && this.$route.query.length) {
-        //this.checked = this.$route.query;
-        //console.log(this.$route.query);
-      console.log(111);
-      // }
+      if (this.$route.query) {
+        this.checked = Object.values(this.$route.query);
+        console.log(111);
+      }
     },
 
     sortPokemonsByType() {
       if (this.checked.length > 0) {
         this.sortedPokemons = this.pokemons.filter(pokemon => this.checked.find(item => pokemon.type === item))
       } else this.sortedPokemons = this.pokemons
-
 
       this.$router.push({ query: this.checked })
     },
