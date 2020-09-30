@@ -4,7 +4,7 @@
     <h1 class="home__title">
       PokeDex
     </h1>
-    {{ checked }}
+
     <div class="home__filters-block">
       <div
         v-for="pokemon of getPokemonTypes"
@@ -56,12 +56,6 @@ export default {
       return typesArray.filter((item, index) => typesArray.indexOf(item) === index);
     },
 
-    shouldBeChecked(val) {
-      if (this.checked instanceof Array) {
-        return this.checked.includes(this.value)
-      }
-      return this.checked.includes(val)
-    },
   },
 
   data() {
@@ -129,4 +123,12 @@ export default {
     justify-content center
     margin 0 auto
     max-width 1200px
+
+.fade-enter-active,
+.fade-leave-active
+  transition opacity 0.3s
+
+.fade-enter,
+.fade-leave-to
+  opacity 0
   </style>
